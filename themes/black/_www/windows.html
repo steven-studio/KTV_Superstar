@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simple Responsive Website</title>
+<!-- <link href="css/index.css" rel="stylesheet"> -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<!-- <link href="css/bootstrap-theme.min.css" rel="stylesheet"> -->
+<style>
+  
+  body, h1, p {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden
+  }
+
+  
+  .nav-header {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    background: #333; 
+    padding: 10px; 
+    width: 100%; 
+  }
+
+  .hamburger {
+    cursor: pointer;
+    font-size: 24px; 
+    color: #fff; 
+    margin-right: 20px; 
+  }
+
+  .title {
+    font-size: 24px; 
+    color: #fff; 
+    flex-grow: 1; 
+  }
+
+  .glyphicon-search {
+    
+    
+    
+    font-size: 24px; 
+    color: #fff; 
+    cursor: pointer;
+  }
+
+  .glyphicon-home {
+    
+    
+    
+    font-size: 24px; 
+    color: #fff; 
+    cursor: pointer;
+  }
+
+  
+  .container {
+    position: relative;
+    width: 100vw; 
+    height: 100vh; 
+    background-color: black;
+    color: white;
+    overflow: hidden; 
+    margin: 0;
+    padding: 0;
+  }
+
+  .button {
+    position: absolute;
+    background-color: #333;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+
+  .button:active {
+    background-color: #555; 
+    transform: scale(0.98); 
+  }
+
+  .sticker-panel {
+    display: none; 
+    position: fixed;
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    min-width: 320px;
+    max-width: 95%;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+    gap: 10px;
+  }
+
+  .sticker-panel img {
+    flex: 1 0 21%; 
+    cursor: pointer;
+    max-width: 100px; 
+    margin: 5px;
+  }
+
+  .sticker-panel img:active {
+    transform: scale(0.95); 
+    opacity: 0.8; 
+  }
+
+  .clicked {
+    transform: scale(0.9);
+    opacity: 0.7;
+  }
+
+  
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  
+  nav {
+    background: #333;
+    color: #fff;
+    padding: 10px;
+  }
+  nav a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    display: inline-block;
+  }
+
+  
+  *, *:before, *:after {
+    box-sizing: border-box;
+  }
+
+  
+  .column {
+    float: left;
+    width: 100%;
+  }
+
+  
+  @media (max-width: 768px) {
+    .sticker-panel {
+      bottom: 10%; 
+      left: 50%; 
+      transform: translateX(-50%); 
+      width: 50%; 
+      min-width: 250px; 
+      max-height: 50vh; 
+      padding: 10px; 
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
+      display: flex; 
+      flex-wrap: wrap; 
+      justify-content: center; 
+      align-items: center; 
+      gap: 10px; 
+      overflow: auto; 
+    }
+
+    .sticker-panel img {
+      flex: 1 0 46%; 
+      max-width: 120px; 
+      margin: 5px; 
+    }
+
+    .sticker-panel img:active {
+      transform: scale(0.95); 
+      opacity: 0.8; 
+    }
+  }
+
+  
+  @media (min-width: 769px) {
+    .sticker-panel {
+      max-width: 80%; 
+      max-height: 80vh; 
+      padding: 20px; 
+    }
+    .sticker-panel img {
+      flex-basis: 22%; 
+    }
+    .sticker-panel img:active {
+      transform: scale(0.95); 
+      opacity: 0.8; 
+    }
+    .column {
+      width: 50%;
+    }
+  }
+
+  
+  @media (min-width: 992px) {
+    .column {
+      width: 33.33%;
+    }
+  }
+
+  
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  
+  footer {
+    display: none; 
+  }
+
+  
+  .layer {
+    display: none;
+  }
+
+  .active {
+    display: block;
+  }
+
+  .nav-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #333;
+    padding: 10px;
+    width: 100%;
+  }
+
+  .search-wrapper {
+    display: flex;
+    width: 80%; 
+    align-items: center;
+  }
+
+  #searchBox {
+    flex-grow: 1;
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 16px;
+    padding: 8px;
+    margin-right: 10px; 
+  }
+
+  .glyphicon-search {
+    cursor: pointer;
+    color: #fff;
+    
+    
+    font-size: 24px;
+    padding: 8px;
+  }
+
+  .glyphicon-option-vertical {
+    cursor: pointer;
+    color: #fff;
+    
+    
+    font-size: 24px;
+    padding: 8px;
+  }
+
+  .search-wrapper .dropdown {
+    position: relative;
+    display: inline-block; 
+    writing-mode: horizontal-tb; 
+  }
+
+  .options-container {
+    position: absolute;
+    left: 50%; 
+    top: 100%; 
+    transform: translateX(-50%); 
+    background-color: #000; 
+    color: white; 
+    padding: 10px; 
+    border-radius: 5px; 
+    display: flex; 
+    flex-wrap: wrap; 
+    justify-content: center; 
+  }
+
+  .options-row {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px; 
+  }
+
+  .option-button {
+    writing-mode: horizontal-tb; 
+    flex-grow: 1; 
+    margin: 4px; 
+    padding: 8px 12px; 
+    background-color: #007bff; 
+    color: white; 
+    border: none; 
+    cursor: pointer; 
+    transition: background-color 0.2s; 
+  }
+
+  
+  .options-container button {
+    all: initial; 
+    margin: 4px; 
+    color: white;
+    padding: 8px 12px; 
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    background: none;
+    border: none;
+    cursor: pointer; 
+    transition: background-color 0.2s; 
+    writing-mode: horizontal-tb; 
+    text-align: center; 
+    width: 100%; 
+    flex-grow: 1;
+    box-sizing: border-box; 
+  }
+
+  .option-button:hover {
+    background-color: #333; 
+  }
+
+  
+  #optionsArea {
+      display: none;
+  }
+
+  #searchResults {
+    overflow-y: auto;
+    max-height: calc(100vh - 250px); 
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f2f2f2; 
+    margin-top: 20px; 
+    border-radius: 5px; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+  }
+
+  #searchResults div {
+    font-size: 18px; 
+    color: #333; 
+    padding: 8px 0; 
+    border-bottom: 1px solid #ddd; 
+  }
+
+  #searchResults div:active {
+    background-color: #e9e9e9; 
+    transform: scale(0.98); 
+  }
+
+  #searchResults div.active {
+    background-color: #e9e9e9; 
+    transform: scale(0.98); 
+  }
+
+  #searchResults div:last-child {
+    border-bottom: none; 
+  }
+</style>
+</head>
+<body>
+
+<div class="container" id="buttonContainer">
+  <div id="defaultLayer" class="layer active">
+    <!-- 把 nav-header 包含进来 -->
+    <nav>
+      <div class="nav-header">
+        <div class="hamburger" onclick="toggleMenu()">☰</div>
+        <h1 class="title">超級巨星系統</h1>
+        <span class="glyphicon glyphicon-search" id="searchIcon"></span>
+      </div>
+    </nav>
+
+    <!-- Static buttons with position data -->
+    <button class="button" id="btnsongmute" data-x="795" data-y="850" data-width="255" data-height="211">靜音 ⊙</button>
+    <button class="button" id="btnmusicup" data-x="793" data-y="392" data-width="256" data-height="209">音量 ↑</button>
+    <button class="button" id="btnsongreplay" data-x="536" data-y="394" data-width="234" data-height="207">重唱 ↻</button>
+    <button class="button" id="btnmarquee" onclick="showMarqueeInput()" data-x="281" data-y="623" data-width="234" data-height="207">跑馬燈 ⇄</button>
+    <button class="button" id="btnorderpageup" data-x="25" data-y="395" data-width="234" data-height="208">已點 ↑</button>
+    <button class="button" id="btnpitchnormal" data-x="25" data-y="1095" data-width="175" data-height="322">原調♮</button>
+    <button class="button" id="btnorderpagedown" data-x="25" data-y="623" data-width="234" data-height="207">已點 ↓</button>
+    <button class="button" id="btnBarrage" onclick="toggleBarragePanel()" data-x="281" data-y="393" data-width="234" data-height="208">彈幕</button>
+    <button class="button" id="btnpitchdirectb3" data-x="670" data-y="1264" data-width="175" data-height="148">b3</button>
+    <button class="button" id="btnosdshow" data-x="536" data-y="623" data-width="235" data-height="207">顯示 ❆</button>
+    <button class="button" id="btnmusicdown" data-x="794" data-y="621" data-width="256" data-height="209">音量 ↓</button>
+    <button class="button" id="btnpitchdirect1" data-x="237" data-y="1097" data-width="175" data-height="148">#1</button>
+    <button class="button" id="btnaudiojoke" data-x="600" data-y="850" data-width="170" data-height="211">嘲笑</button>
+    <button class="button" id="btnaudiobad" data-x="409" data-y="850" data-width="170" data-height="211">噓聲</button>
+    <button class="button" id="btnaudiogood" data-x="219" data-y="850" data-width="170" data-height="211">掌聲</button>
+    <button class="button" id="btnaudiohoho" data-x="25" data-y="850" data-width="170" data-height="211">歡呼</button>
+    <button class="button" id="btnpitchdirectb2" data-x="454" data-y="1265" data-width="175" data-height="148">b2</button>
+    <button class="button" id="btnpitchwoman" data-x="881" data-y="1264" data-width="175" data-height="148">女♀</button>
+    <button class="button" id="btnpitchdirect3" data-x="670" data-y="1097" data-width="175" data-height="148">#3</button>
+    <button class="button" id="btnpitchman" data-x="881" data-y="1098" data-width="175" data-height="148">男♂</button>
+    <button class="button" id="btnsongback" data-x="25" data-y="1444" data-width="254" data-height="189">↶ 倒轉</button>
+    <button class="button" id="btnsongpause" data-x="296" data-y="1444" data-width="235" data-height="189">■ ►</button>
+    <button class="button" id="btnsongnext" data-x="549" data-y="1444" data-width="268" data-height="187">快轉 ↷</button>
+    <button class="button" id="btnsticker" onclick="toggleStickerPanel()" data-x="833" data-y="1444" data-width="223" data-height="187">貼圖</button>
+    <button class="button" id="btnpitchdirect2" data-x="454" data-y="1098" data-width="175" data-height="148">#2</button>
+    <button class="button" id="btnpitchdirectb1" data-x="237" data-y="1264" data-width="175" data-height="148">b1</button>
+    <button class="button" id="btnsongchannel" data-x="25" data-y="1671" data-width="490" data-height="211">原唱/伴唱</button>
+    <button class="button" id="btnsongcut" data-x="536" data-y="1671" data-width="521" data-height="211">切歌✗</button>
+    <!-- Continue with more buttons as needed -->
+
+    <!-- Inside your container, add a new div for the sticker panel -->
+    <div id="stickerPanel" class="sticker-panel">
+      <!-- Add your stickers here -->
+      <img src="superstar-pic/1-1.png" alt="Sticker 1" data-sticker-id="1-1" />
+      <img src="superstar-pic/1-2.png" alt="Sticker 2" data-sticker-id="1-2" />
+      <!-- More stickers as needed -->
+      <img src="superstar-pic/2-1.png" alt="Sticker 3" data-sticker-id="2-1" />
+      <img src="superstar-pic/2-2.png" alt="Sticker 4" data-sticker-id="2-2" />
+      <img src="superstar-pic/5-1.png" alt="Sticker 5" data-sticker-id="5-1" />
+      <img src="superstar-pic/5-2.png" alt="Sticker 6" data-sticker-id="5-2" />
+      <img src="superstar-pic/5-3.png" alt="Sticker 7" data-sticker-id="5-3" />
+      <img src="superstar-pic/5-4.png" alt="Sticker 8" data-sticker-id="5-4" />
+      <img src="superstar-pic/5-5.png" alt="Sticker 9" data-sticker-id="5-5" />
+      <img src="superstar-pic/5-6.png" alt="Sticker 10" data-sticker-id="5-6" />
+      <img src="superstar-pic/5-7.png" alt="Sticker 11" data-sticker-id="5-7" />
+      <img src="superstar-pic/5-8.png" alt="Sticker 12" data-sticker-id="5-8" />
+      <img src="superstar-pic/5-9.png" alt="Sticker 13" data-sticker-id="5-9" />
+      <img src="superstar-pic/5-10.png" alt="Sticker 14" data-sticker-id="5-10" />
+      <img src="superstar-pic/5-11.png" alt="Sticker 15" data-sticker-id="5-11" />
+      <img src="superstar-pic/5-12.png" alt="Sticker 16" data-sticker-id="5-12" />
+    </div>
+  </div>
+
+  <div id="searchLayer" class="layer">
+    <!-- 把 nav-header 包含进来 -->
+    <nav>
+      <div class="nav-header">
+        <!-- 使用 div 模仿输入框 -->
+        <div class="search-wrapper">
+          <input type="text" id="searchBox" placeholder="曲號/歌名/歌手/注音/拼音">
+          <!-- Change glyphicon-search to glyphicon-option-vertical -->
+          <!-- Wrap glyphicon and options-container in a div -->
+          <div class="dropdown">
+            <span class="glyphicon glyphicon-option-vertical" onclick="toggleOptionsDisplay()"></span>
+            <div id="optionsArea" class="options-container" style="display:none;">
+                <!-- Your options here -->
+                <!-- Row 1 -->
+                <div class="options-row">
+                  <button class="option-button" data-type="hot" onclick="sendOption('hot')">熱門</button>
+                  <button class="option-button" data-type="mandarin" onclick="sendOption('mandarin')">國語</button>
+                  <button class="option-button" data-type="taiwanese" onclick="sendOption('taiwanese')">台語</button>
+                  <button class="option-button" data-type="group" onclick="sendOption('group')">團體</button>
+                </div>
+                <!-- Row 2 -->
+                <div class="options-row">
+                  <button class="option-button" data-type="new" onclick="sendOption('new')">新歌</button>
+                  <button class="option-button" data-type="male" onclick="sendOption('male')">男生</button>
+                  <button class="option-button" data-type="female" onclick="sendOption('female')">女生</button>
+                  <button class="option-button" data-type="duet" onclick="sendOption('duet')">對唱</button>
+                </div>
+            </div>
+          </div>
+        </div>
+        <span class="glyphicon glyphicon-home" id="homeIcon"></span>
+      </div>
+    </nav>
+
+    <div id="searchResults"></div>
+
+    <button class="button" id="btnsongchannel" data-x="25" data-y="1671" data-width="490" data-height="211">原唱/伴唱</button>
+    <button class="button" id="btnsongcut" data-x="536" data-y="1671" data-width="521" data-height="211">切歌✗</button>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <!-- Content removed -->
+  </div>
+</footer>
+
+<script>
+function toggleMenu() {
+  var navLinks = document.querySelectorAll('nav a');
+  navLinks.forEach(function(link) {
+    link.style.display = link.style.display === 'block' ? 'none' : 'block';
+  });
+}
+
+const originalWidth = 1080; 
+const originalHeight = 1920; 
+
+function sendSignal(buttonId, marqueeText = '') {
+  
+  const data = {
+    buttonId: buttonId,
+    action: 'clicked',
+    text: marqueeText 
+  };
+
+  
+  fetch('/signal', {
+    method: 'POST', 
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8', 
+    },
+    body: JSON.stringify(data),
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Success:', data);
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+}
+
+function toggleBarragePanel() {
+  const marqueeText = prompt("請輸入彈幕內容:");
+  if (marqueeText) {
+    sendSignal('btnBarrage', marqueeText);
+  }
+}
+
+function showMarqueeInput() {
+  const marqueeText = prompt("請輸入跑馬燈文本:");
+  if (marqueeText) {
+    sendSignal('btnmarquee', marqueeText);
+  }
+}
+
+function toggleStickerPanel() {
+  var panel = document.getElementById('stickerPanel');
+  panel.style.display = (panel.style.display === 'none' || panel.style.display === '') ? 'block' : 'none';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  
+  var panel = document.getElementById('stickerPanel');
+  if (panel.style.display !== 'none') {
+    panel.style.display = 'none';
+  }
+
+  
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  
+
+  var stickers = document.querySelectorAll('#stickerPanel img');
+  stickers.forEach(function(sticker) {
+    sticker.addEventListener('click', function() {
+      var stickerId = this.getAttribute('data-sticker-id');
+      sendStickerSignal(stickerId);
+    });
+  });
+});
+
+document.querySelectorAll('#stickerPanel img').forEach(function(sticker) {
+  sticker.addEventListener('touchstart', function() {
+    this.style.transform = 'scale(0.95)';
+    this.style.opacity = '0.8';
+  });
+  sticker.addEventListener('touchend', function() {
+    
+    this.style.transform = '';
+    this.style.opacity = '';
+  });
+});
+
+function sendStickerSignal(stickerId) {
+  
+  
+  fetch('/send-sticker', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8',
+    },
+    body: JSON.stringify({ stickerId: stickerId }),
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Sticker sent successfully', data);
+  })
+  .catch(error => {
+    console.error('Error sending sticker:', error);
+  });
+}
+
+function adjustButtons() {
+  const container = document.getElementById('buttonContainer');
+  const scaleFactorW = container.offsetWidth / originalWidth;
+  const scaleFactorH = container.offsetHeight / originalHeight;
+
+  const buttons = container.getElementsByClassName('button');
+  Array.from(buttons).forEach(btn => {
+    const x = btn.getAttribute('data-x');
+    const y = btn.getAttribute('data-y');
+    const width = btn.getAttribute('data-width');
+    const height = btn.getAttribute('data-height');
+
+    btn.style.left = (x * scaleFactorW) + 'px';
+    btn.style.top = (y * scaleFactorH) + 'px';
+    btn.style.width = (width * scaleFactorW) + 'px';
+    btn.style.height = (height * scaleFactorH) + 'px';
+
+    
+    btn.addEventListener('click', function() {
+      sendSignal(this.id); 
+    });
+  });
+}
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  adjustButtons();
+  window.addEventListener('resize', adjustButtons);
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  var searchIcon = document.getElementById('searchIcon');
+  searchIcon.addEventListener('click', function() {
+    toggleLayer('searchLayer');
+  });
+});
+
+function toggleLayer(layerId) {
+  
+  var layers = document.getElementsByClassName('layer');
+  for (var i = 0; i < layers.length; i++) {
+    layers[i].classList.remove('active');
+  }
+
+  
+  if (layerId) {
+    var layerToShow = document.getElementById(layerId);
+    if (layerToShow) {
+      layerToShow.classList.add('active');
+    }
+  }
+}
+
+function performSearch() {
+  var searchBox = document.getElementById('searchBox');
+  var query = searchBox.value;
+
+  const resultsContainer = document.getElementById('searchResults');
+  
+  
+  if (!query) {
+    resultsContainer.innerHTML = '';
+    return; 
+  }
+
+  
+  fetch('/search', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+    body: JSON.stringify({ query: query }),
+  })
+  .then(response => response.json())
+  .then(data => displayResults(data))
+  .catch(error => console.error('Error:', error));
+}
+
+
+document.getElementById('searchBox').addEventListener('input', performSearch);
+
+function toggleOptionsDisplay() {
+    var optionsArea = document.getElementById('optionsArea');
+    optionsArea.style.display = optionsArea.style.display === 'block' ? 'none' : 'block';
+}
+
+
+
+
+function sendOption(type) {
+    const resultsContainer = document.getElementById('searchResults');
+    resultsContainer.innerHTML = 'Loading...';  
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/api/get-songs-by-type", true);  
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify({ type: type }));  
+
+    xhr.onload = function() {
+        if (this.status === 200) {
+            try {
+                const data = JSON.parse(this.responseText);
+                displayResults(data);  
+            } catch (error) {
+                console.error('Error parsing JSON:', error);
+                resultsContainer.innerHTML = 'Error loading songs.';
+            }
+        } else {
+            console.error("Server response:", this.status, this.statusText);
+            resultsContainer.innerHTML = 'Failed to load songs.';
+        }
+    };
+
+    xhr.onerror = function() {
+        console.error("Request failed");
+        resultsContainer.innerHTML = 'Request failed to reach the server.';
+    };
+}
+
+function performQuickSong(value, type) {
+    
+}
+
+function displayResults(data) {
+  const resultsContainer = document.getElementById('searchResults');
+  resultsContainer.innerHTML = ''; 
+
+  data.forEach(song => {
+    
+    const songElement = document.createElement('div');
+    
+    
+    songElement.textContent = `${song.SongNumber} - ${song.ArtistA} - ${song.Song}`;
+    songElement.classList.add("search-result-item"); 
+    
+    
+    let displayText = `${song.SongNumber} - ${song.ArtistA}`;
+    if (song.ArtistB && song.ArtistB.trim() !== '') {
+      displayText += ` & ${song.ArtistB}`;
+    }
+    displayText += ` - ${song.Song}`;
+    songElement.textContent = displayText;
+
+    songElement.addEventListener('click', () => {
+      
+      addToPlaylist(song);
+    });
+    
+    resultsContainer.appendChild(songElement);
+  });
+}
+
+
+document.getElementById('searchResults').addEventListener('touchstart', function(e) {
+  if (e.target.tagName === 'DIV') {
+    e.target.classList.add('active');
+  }
+}, false);
+
+document.getElementById('searchResults').addEventListener('touchend', function(e) {
+  if (e.target.tagName === 'DIV') {
+    e.target.classList.remove('active');
+  }
+}, false);
+
+function addToPlaylist(song) {
+  
+  fetch('/add-to-playlist', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8',
+    },
+    body: JSON.stringify(song), 
+  })
+  .then(response => response.json())
+  .then(data => console.log('Added to playlist:', data))
+  .catch(error => console.error('Error adding song to playlist:', error));
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  var homeIcon = document.getElementById('homeIcon');
+  homeIcon.addEventListener('click', function() {
+    toggleLayer('defaultLayer'); 
+  });
+});
+
+
+function showHome() {
+  
+  
+  toggleLayer('defaultLayer'); 
+}
+</script>
+
+</body>
+</html>
