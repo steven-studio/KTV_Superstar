@@ -1,3 +1,6 @@
 DualScreenSetup.exe
 Superstar.mdf
 Superstar_log.ldf
+新增資料夾/tools/ffmpeg/bin/ffplay.exe
+新增資料夾/tools/ffmpeg/bin/ffmpeg.exe
+新增資料夾/tools/ffmpeg/bin/ffprobe.exe

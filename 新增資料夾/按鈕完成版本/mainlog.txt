@@ -1,0 +1,11 @@
+[2025/2/20 下午 05:18:08] System.IO.FileNotFoundException: 無法載入檔案或組件 'System.Data.SQLite, Version=1.0.118.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139' 或其相依性的其中之一。 系統找不到指定的檔案。
+檔案名稱: 'System.Data.SQLite, Version=1.0.118.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139'
+   於 DualScreenDemo.SongListManager.InitializeDatabase()
+   於 DualScreenDemo.SongListManager..ctor()
+   於 DualScreenDemo.Program.Main()
+
+警告: 組件繫結記錄切換為 OFF。
+若要記錄組件繫結失敗，請將登錄值 [HKLM\Software\Microsoft\Fusion!EnableLog] (DWORD) 設為 1。
+注意: 與組件繫結失敗記錄相關的效能會有部分負面影響。
+若要關閉此功能，請移除登錄值 [HKLM\Software\Microsoft\Fusion!EnableLog]。
+

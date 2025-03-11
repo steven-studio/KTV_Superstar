@@ -1,0 +1,45 @@
+{
+  "version": 2,
+  "dgSpecHash": "RHSg7lx0x5Y=",
+  "success": false,
+  "projectFilePath": "C:\\KTV_Superstar\\KTV_Superstar.csproj",
+  "expectedPackageFiles": [],
+  "logs": [
+    {
+      "code": "NU1101",
+      "level": "Error",
+      "message": "找不到套件 Microsoft.NETCore.App.Ref。在來源中不存在此識別碼的套件: Microsoft Visual Studio Offline Packages",
+      "libraryId": "Microsoft.NETCore.App.Ref",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    },
+    {
+      "code": "NU1101",
+      "level": "Error",
+      "message": "找不到套件 Microsoft.WindowsDesktop.App.Ref。在來源中不存在此識別碼的套件: Microsoft Visual Studio Offline Packages",
+      "libraryId": "Microsoft.WindowsDesktop.App.Ref",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    },
+    {
+      "code": "NU1101",
+      "level": "Error",
+      "message": "找不到套件 Microsoft.AspNetCore.App.Ref。在來源中不存在此識別碼的套件: Microsoft Visual Studio Offline Packages",
+      "libraryId": "Microsoft.AspNetCore.App.Ref",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    },
+    {
+      "code": "NU1101",
+      "level": "Error",
+      "message": "找不到套件 Microsoft.NETCore.App.Host.win-x64。在來源中不存在此識別碼的套件: Microsoft Visual Studio Offline Packages",
+      "libraryId": "Microsoft.NETCore.App.Host.win-x64",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    }
+  ]
+}
