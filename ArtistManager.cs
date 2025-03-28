@@ -9,7 +9,7 @@ namespace KTV_Superstar;
 
 public class ArtistManager
 {
-    private static ArtistManager _instance;
+    private static ArtistManager _instance = default!;
     public List<Artist> AllArtists { get; private set; }
     
     public static ArtistManager Instance
@@ -52,10 +52,10 @@ public class ArtistManager
                     {
                         while (reader.Read())  
                         {
-                            string artist = reader["歌手姓名"].ToString();
-                            string phonetic = reader["歌手注音"].ToString();
-                            string category = reader["歌手分類"].ToString();
-                            string strokesStr = reader["歌手筆畫"].ToString();
+                            string artist = reader["歌手姓名"].ToString()!;
+                            string phonetic = reader["歌手注音"].ToString()!;
+                            string category = reader["歌手分類"].ToString()!;
+                            string strokesStr = reader["歌手筆畫"].ToString()!;
 
                             
                             if (string.IsNullOrEmpty(strokesStr))

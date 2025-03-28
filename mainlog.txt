@@ -1,0 +1,54 @@
+[2025/3/28 下午 12:11:30] System.IO.FileNotFoundException: Could not find file 'C:\Users\Steven\KTV_Superstar\config.ini'.
+File name: 'C:\Users\Steven\KTV_Superstar\config.ini'
+   at Microsoft.Win32.SafeHandles.SafeFileHandle.CreateFile(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options)
+   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, Nullable`1 unixCreateMode)
+   at System.IO.Strategies.OSFileStreamStrategy..ctor(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, Nullable`1 unixCreateMode)
+   at System.IO.Strategies.FileStreamHelpers.ChooseStrategyCore(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, Nullable`1 unixCreateMode)
+   at System.IO.StreamReader.ValidateArgsAndOpenPath(String path, Encoding encoding, Int32 bufferSize)
+   at System.IO.StreamReader..ctor(String path, Encoding encoding)
+   at KTV_Superstar.PrimaryForm.LoadPhoneticSymbolsFromConfig() in C:\Users\Steven\KTV_Superstar\PrimaryFormParts\SingerSearch\PrimaryForm.SingerSearch.BopomofoSearch.cs:line 70
+   at KTV_Superstar.PrimaryForm.InitializeButtonsForZhuYinSingers() in C:\Users\Steven\KTV_Superstar\PrimaryFormParts\SingerSearch\PrimaryForm.SingerSearch.BopomofoSearch.cs:line 198
+   at KTV_Superstar.PrimaryForm.InitializeFormAndControls() in C:\Users\Steven\KTV_Superstar\PrimaryFormParts\PrimaryForm.cs:line 576
+   at KTV_Superstar.PrimaryForm..ctor() in C:\Users\Steven\KTV_Superstar\PrimaryFormParts\PrimaryForm.cs:line 329
+   at KTV_Superstar.Program.Main() in C:\Users\Steven\KTV_Superstar\Program.cs:line 100
+[2025/3/28 下午 12:12:24] System.IO.FileNotFoundException: Could not find file 'C:\Users\Steven\KTV_Superstar\config.ini'.
+File name: 'C:\Users\Steven\KTV_Superstar\config.ini'
+   at Microsoft.Win32.SafeHandles.SafeFileHandle.CreateFile(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options)
+   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, Nullable`1 unixCreateMode)
+   at System.IO.Strategies.OSFileStreamStrategy..ctor(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, Nullable`1 unixCreateMode)
+   at System.IO.Strategies.FileStreamHelpers.ChooseStrategyCore(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, Nullable`1 unixCreateMode)
+   at System.IO.StreamReader.ValidateArgsAndOpenPath(String path, Encoding encoding, Int32 bufferSize)
+   at System.IO.StreamReader..ctor(String path, Encoding encoding)
+   at KTV_Superstar.PrimaryForm.LoadPhoneticSymbolsFromConfig() in C:\Users\Steven\KTV_Superstar\PrimaryFormParts\SingerSearch\PrimaryForm.SingerSearch.BopomofoSearch.cs:line 70
+   at KTV_Superstar.PrimaryForm.InitializeButtonsForZhuYinSingers() in C:\Users\Steven\KTV_Superstar\PrimaryFormParts\SingerSearch\PrimaryForm.SingerSearch.BopomofoSearch.cs:line 198
+   at KTV_Superstar.PrimaryForm.InitializeFormAndControls() in C:\Users\Steven\KTV_Superstar\PrimaryFormParts\PrimaryForm.cs:line 576
+   at KTV_Superstar.PrimaryForm..ctor() in C:\Users\Steven\KTV_Superstar\PrimaryFormParts\PrimaryForm.cs:line 329
+   at KTV_Superstar.Program.Main() in C:\Users\Steven\KTV_Superstar\Program.cs:line 100
+[2025/3/28 下午 08:27:16] System.ArgumentException: Parameter is not valid.
+   at System.Drawing.SafeNativeMethods.Gdip.CheckStatus(Int32 status)
+   at System.Drawing.Bitmap..ctor(Int32 width, Int32 height, PixelFormat format)
+   at System.Drawing.Icon.BmpFrame()
+   at System.Drawing.Icon.ToBitmap()
+   at System.Windows.Forms.DpiHelper.GetBitmapFromIcon(Type t, String name)
+   at System.Windows.Forms.ThreadExceptionDialog..ctor(Exception t)
+   at System.Windows.Forms.Application.ThreadContext.OnThreadException(Exception ex)
+   at System.Windows.Forms.NativeWindow.Callback(HWND hWnd, MessageId msg, WPARAM wparam, LPARAM lparam)
+   at Windows.Win32.PInvoke.DispatchMessage(MSG* lpMsg)
+   at System.Windows.Forms.Application.ComponentManager.Microsoft.Office.IMsoComponentManager.FPushMessageLoop(UIntPtr dwComponentID, msoloop uReason, Void* pvLoopData)
+   at System.Windows.Forms.Application.ThreadContext.RunMessageLoopInner(msoloop reason, ApplicationContext context)
+   at System.Windows.Forms.Application.ThreadContext.RunMessageLoop(msoloop reason, ApplicationContext context)
+   at KTV_Superstar.Program.Main() in C:\Users\Steven\KTV_Superstar\Program.cs:line 118
+[2025/3/28 下午 08:34:30] System.ArgumentException: Parameter is not valid.
+   at System.Drawing.SafeNativeMethods.Gdip.CheckStatus(Int32 status)
+   at System.Drawing.Bitmap..ctor(Int32 width, Int32 height, PixelFormat format)
+   at System.Drawing.Icon.BmpFrame()
+   at System.Drawing.Icon.ToBitmap()
+   at System.Windows.Forms.DpiHelper.GetBitmapFromIcon(Type t, String name)
+   at System.Windows.Forms.ThreadExceptionDialog..ctor(Exception t)
+   at System.Windows.Forms.Application.ThreadContext.OnThreadException(Exception ex)
+   at System.Windows.Forms.NativeWindow.Callback(HWND hWnd, MessageId msg, WPARAM wparam, LPARAM lparam)
+   at Windows.Win32.PInvoke.DispatchMessage(MSG* lpMsg)
+   at System.Windows.Forms.Application.ComponentManager.Microsoft.Office.IMsoComponentManager.FPushMessageLoop(UIntPtr dwComponentID, msoloop uReason, Void* pvLoopData)
+   at System.Windows.Forms.Application.ThreadContext.RunMessageLoopInner(msoloop reason, ApplicationContext context)
+   at System.Windows.Forms.Application.ThreadContext.RunMessageLoop(msoloop reason, ApplicationContext context)
+   at KTV_Superstar.Program.Main() in C:\Users\Steven\KTV_Superstar\Program.cs:line 118

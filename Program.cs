@@ -40,6 +40,9 @@ static class Program
     internal static SerialPortManager serialPortManager = default!;
     private static PrimaryForm primaryForm = default!; // 儲存實例的參考
 
+    [DllImport("user32.dll")]
+    private static extern bool SetProcessDPIAware();
+
     /// <summary>
     ///  The main entry point for the application.
     /// </summary>
@@ -66,6 +69,12 @@ static class Program
                 RunBatchFileToAddUrlAcl(ipAddress, port);
             }
 
+            // 啟用 DPI 感知（僅適用於 Windows Vista 及以上）
+            if (Environment.OSVersion.Version.Major >= 6)
+            {
+                SetProcessDPIAware();
+            }
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
@@ -79,7 +88,7 @@ static class Program
             serialPortManager.InitializeSerialPort();
 
             // 啟動 HandwritingRecognitionServer (獨立啟動外部exe)
-            StartHandwritingRecognitionServer();
+            //StartHandwritingRecognitionServer();
 
             // 輸出屏幕信息
             Console.WriteLine($"Virtual Screen: {SystemInformation.VirtualScreen}");
@@ -108,7 +117,7 @@ static class Program
 
             InitializeSecondaryScreen();
 
-            primaryForm.Show();
+            // primaryForm.Show(); // 移除這一行
             // primaryForm.ShowSendOffScreen();
 
             // 其他初始化代碼...

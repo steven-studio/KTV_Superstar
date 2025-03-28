@@ -41,7 +41,7 @@ public partial class PrimaryForm
             {1115, 580, 70, 65} 
         };
 
-        int screenW = Screen.PrimaryScreen.Bounds.Width;
+        int screenW = Screen.PrimaryScreen!.Bounds.Width;
         int screenH = Screen.PrimaryScreen.Bounds.Height;
 
         
@@ -78,7 +78,7 @@ public partial class PrimaryForm
             }
 
             
-            favoriteNumberButton[i].Click += FavoriteNumberButton_Click;
+            favoriteNumberButton[i].Click += FavoriteNumberButton_Click!;
 
             
             this.Controls.Add(favoriteNumberButton[i]);
@@ -97,7 +97,7 @@ public partial class PrimaryForm
         enterFavoriteButton.BackColor = Color.Transparent;
         enterFavoriteButton.FlatAppearance.MouseDownBackColor = Color.Transparent; 
         enterFavoriteButton.FlatAppearance.MouseOverBackColor = Color.Transparent; 
-        enterFavoriteButton.Click += EnterFavoriteButton_Click; 
+        enterFavoriteButton.Click += EnterFavoriteButton_Click!; 
 
         
         newFavoriteButton = new Button()
@@ -112,7 +112,7 @@ public partial class PrimaryForm
         newFavoriteButton.BackColor = Color.Transparent;
         newFavoriteButton.FlatAppearance.MouseDownBackColor = Color.Transparent; 
         newFavoriteButton.FlatAppearance.MouseOverBackColor = Color.Transparent; 
-        newFavoriteButton.Click += NewFavoriteButton_Click;
+        newFavoriteButton.Click += NewFavoriteButton_Click!;
 
         
         refillFavoriteButton = new Button()
@@ -127,7 +127,7 @@ public partial class PrimaryForm
         refillFavoriteButton.BackColor = Color.Transparent;
         refillFavoriteButton.FlatAppearance.MouseDownBackColor = Color.Transparent; 
         refillFavoriteButton.FlatAppearance.MouseOverBackColor = Color.Transparent; 
-        refillFavoriteButton.Click += RefillFavoriteButton_Click;
+        refillFavoriteButton.Click += RefillFavoriteButton_Click!;
 
         
         closeFavoriteButton = new Button()
@@ -142,7 +142,7 @@ public partial class PrimaryForm
         closeFavoriteButton.BackColor = Color.Transparent;
         closeFavoriteButton.FlatAppearance.MouseDownBackColor = Color.Transparent; 
         closeFavoriteButton.FlatAppearance.MouseOverBackColor = Color.Transparent; 
-        closeFavoriteButton.Click += CloseFavoriteButton_Click;
+        closeFavoriteButton.Click += CloseFavoriteButton_Click!;
 
         
         errorMessageLabel = new Label
@@ -163,18 +163,18 @@ public partial class PrimaryForm
     
     private void FavoriteNumberButton_Click(object sender, EventArgs e)
     {
-        Button clickedButton = sender as Button;
+        Button clickedButton = (Button)sender;
         if (clickedButton != null)
         {
             
-            mobileNumber += clickedButton.Tag.ToString();
+            mobileNumber += clickedButton.Tag!.ToString();
             Console.WriteLine("Number button clicked: " + clickedButton.Tag.ToString());
             phonenumber = mobileNumber;
             
             FavoritePictureBox.Invalidate();
         }
     }
-    public static string phonenumber;
+    public static string phonenumber = default!;
     private void FavoritePictureBox_Paint(object sender, PaintEventArgs e)
     {
         if (!string.IsNullOrEmpty(mobileNumber))

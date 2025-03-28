@@ -190,10 +190,10 @@ public class HttpServer
     // 生成 QR 码并返回图像路径
     public static string GenerateQRCode(string content, string savePath)
     {
-        var writer = new BarcodeWriter<Bitmap>
+        var writer = new ZXing.BarcodeWriterPixelData
         {
-            Format = BarcodeFormat.QR_CODE,
-            Options = new QrCodeEncodingOptions
+            Format = ZXing.BarcodeFormat.QR_CODE,
+            Options = new ZXing.Common.EncodingOptions
             {
                 Height = 165,
                 Width = 165,
@@ -201,10 +201,42 @@ public class HttpServer
             }
         };
 
-        using (var bitmap = writer.Write(content))
+        if (string.IsNullOrWhiteSpace(content))
         {
-            bitmap.Save(savePath, ImageFormat.Png);
-            return savePath;
+            MessageBox.Show("QRCode內容不可為空！");
+            return null!;
+        }
+
+        try
+        {
+            // 取得PixelData
+            var pixelData = writer.Write(content);
+
+            // 建立Bitmap物件
+            using (var bitmap = new Bitmap(pixelData.Width, pixelData.Height, PixelFormat.Format32bppRgb))
+            {
+                // 鎖定bitmap資料並複製進去
+                var bitmapData = bitmap.LockBits(new Rectangle(0, 0, pixelData.Width, pixelData.Height),
+                                                ImageLockMode.WriteOnly, PixelFormat.Format32bppRgb);
+                try
+                {
+                    // 複製像素資料到bitmap
+                    System.Runtime.InteropServices.Marshal.Copy(pixelData.Pixels, 0, bitmapData.Scan0, pixelData.Pixels.Length);
+                }
+                finally
+                {
+                    bitmap.UnlockBits(bitmapData);
+                }
+
+                // 儲存bitmap為PNG檔案
+                bitmap.Save(savePath, ImageFormat.Png);
+                return savePath;
+            }
+        }
+        catch (InvalidOperationException ex)
+        {
+            MessageBox.Show("無法產生 QRCode：" + ex.Message);
+            return null!;
         }
     }
 
@@ -270,7 +302,7 @@ public class HttpServer
             else if (context.Request.HttpMethod == "GET")
             {
                 // 获取请求的完整URL路径
-                string requestPath = context.Request.Url.AbsolutePath;
+                string requestPath = context.Request.Url!.AbsolutePath;
                 
                 // 如果是根路径访问，直接返回404
                 if (requestPath == "/" || requestPath == "/windows.html")
@@ -337,7 +369,7 @@ public class HttpServer
             var searchRequest = JsonConvert.DeserializeObject<SearchRequest>(requestBody);
             
             List<SongData> searchResults;
-            switch (searchRequest.Type)
+            switch (searchRequest!.Type)
             {
                 case "new-songs":
                     searchResults = SongListManager.NewSongLists["國語"];
@@ -408,7 +440,7 @@ public class HttpServer
         {
             var data = JsonConvert.DeserializeObject<SoundControlRequest>(requestBody);
 
-            switch (data.Command)
+            switch (data!.Command)
             {
                 case "pause":
                 // 执行暂停操作
@@ -557,14 +589,14 @@ public class HttpServer
                     // 执行切歌操作
                     if (PrimaryForm.Instance.InvokeRequired)
                     {
-                        PrimaryForm.Instance.Invoke(new System.Action(() => 
+                        PrimaryForm.Instance.Invoke(new System.Action(async () => 
                         {
-                            PrimaryForm.Instance.videoPlayerForm.SkipToNextSong();
+                            await PrimaryForm.Instance.videoPlayerForm.SkipToNextSong();
                         }));
                     }
                     else
                     {
-                        PrimaryForm.Instance.videoPlayerForm.SkipToNextSong();
+                        await PrimaryForm.Instance.videoPlayerForm.SkipToNextSong();
                     }
                     break;
                 case "lower_key":
@@ -777,7 +809,7 @@ public class HttpServer
             {
                 Console.WriteLine($"Ordering Song: {song.Song} by {song.ArtistA}");
                 // 这里可以添加处理逻辑，例如将歌曲加入到播放列表或数据库中
-                OverlayForm.MainForm.AddSongToPlaylist(song);  
+                await OverlayForm.MainForm.AddSongToPlaylist(song);  
 
                 var response = new { status = "success", message = "Song ordered successfully" };
                 string jsonResponse = JsonConvert.SerializeObject(response);
@@ -838,7 +870,7 @@ public class HttpServer
 
     public class SoundControlRequest
     {
-        public string Command { get; set; }
+        public string Command { get; set; } = default!;
     }
 
     private static async Task HandleStickerRequest(HttpListenerContext context)
@@ -854,7 +886,7 @@ public class HttpServer
         try
         {
             var data = JsonConvert.DeserializeObject<StickerRequest>(requestBody);
-            string stickerId = data.StickerId;
+            string stickerId = data!.StickerId;
 
             // 处理 stickerId 的逻辑，例如显示贴图
             if (OverlayForm.MainForm != null)
@@ -888,7 +920,7 @@ public class HttpServer
 
     public class StickerRequest
     {
-        public string StickerId { get; set; }
+        public string StickerId { get; set; } = default!;
     }
 
     // 封装响应代码以避免重复
@@ -964,11 +996,13 @@ public class HttpServer
         {
             context.Response.StatusCode = 400;
             Console.WriteLine("解析留言数据时出错");
+            Console.WriteLine(ex);
         }
         catch (Exception ex)
         {
             context.Response.StatusCode = 500;
             Console.WriteLine("服务器内部错误");
+            Console.WriteLine(ex);
         }
         finally
         {
@@ -1155,7 +1189,7 @@ public class HttpServer
         try
         {
             // 获取请求的完整URL路径
-            string requestPath = context.Request.Url.AbsolutePath;
+            string requestPath = context.Request.Url!.AbsolutePath;
             
             // 检查URL是否包含随机文件夹名
             if (!requestPath.Contains("/" + randomFolderPath + "/"))
@@ -1177,7 +1211,7 @@ public class HttpServer
             context.Response.ContentType = contentType;
             
             // 对于静态文件使用缓存
-            if (_fileCache.TryGetValue(filePath, out byte[] cachedContent))
+            if (_fileCache.TryGetValue(filePath, out byte[]? cachedContent))
             {
                 context.Response.ContentLength64 = cachedContent.Length;
                 await context.Response.OutputStream.WriteAsync(cachedContent, 0, cachedContent.Length);

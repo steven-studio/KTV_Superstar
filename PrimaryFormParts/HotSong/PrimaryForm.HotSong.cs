@@ -9,34 +9,34 @@ namespace KTV_Superstar;
 
 public partial class PrimaryForm
 {
-    private Button hotPlayButton;
-    private Bitmap hotPlayNormalBackground; 
-    private Bitmap hotPlayActiveBackground; 
+    private Button hotPlayButton = default!;
+    private Bitmap hotPlayNormalBackground = default!; 
+    private Bitmap hotPlayActiveBackground = default!; 
 
-    private Button guoYuButtonHotSong;
-    private Bitmap guoYuHotSongNormalBackground;
-    private Bitmap guoYuHotSongActiveBackground;
-    private Button taiYuButtonHotSong;
-    private Bitmap taiYuHotSongNormalBackground;
-    private Bitmap taiYuHotSongActiveBackground;
-    private Button taiYuNewSongButtonHotSong;
-    private Bitmap taiYuNewSongHotSongNormalBackground;
-    private Bitmap taiYuNewSongHotSongActiveBackground;
-    private Button guoYuNewSongButtonHotSong;
-    private Bitmap guoYuNewSongHotSongNormalBackground;
-    private Bitmap guoYuNewSongHotSongActiveBackground;
-    private Button yueYuButtonHotSong;
-    private Bitmap yueYuHotSongNormalBackground;
-    private Bitmap yueYuHotSongActiveBackground;
-    private Button yingWenButtonHotSong;
-    private Bitmap yingWenHotSongNormalBackground;
-    private Bitmap yingWenHotSongActiveBackground;
-    private Button riYuButtonHotSong;
-    private Bitmap riYuHotSongNormalBackground;
-    private Bitmap riYuHotSongActiveBackground;
-    private Button hanYuButtonHotSong;
-    private Bitmap hanYuHotSongNormalBackground;
-    private Bitmap hanYuHotSongActiveBackground;
+    private Button guoYuButtonHotSong = default!;
+    private Bitmap guoYuHotSongNormalBackground = default!;
+    private Bitmap guoYuHotSongActiveBackground = default!;
+    private Button taiYuButtonHotSong = default!;
+    private Bitmap taiYuHotSongNormalBackground = default!;
+    private Bitmap taiYuHotSongActiveBackground = default!;
+    private Button taiYuNewSongButtonHotSong = default!;
+    private Bitmap taiYuNewSongHotSongNormalBackground = default!;
+    private Bitmap taiYuNewSongHotSongActiveBackground = default!;
+    private Button guoYuNewSongButtonHotSong = default!;
+    private Bitmap guoYuNewSongHotSongNormalBackground = default!;
+    private Bitmap guoYuNewSongHotSongActiveBackground = default!;
+    private Button yueYuButtonHotSong = default!;
+    private Bitmap yueYuHotSongNormalBackground = default!;
+    private Bitmap yueYuHotSongActiveBackground = default!;
+    private Button yingWenButtonHotSong = default!;
+    private Bitmap yingWenHotSongNormalBackground = default!;
+    private Bitmap yingWenHotSongActiveBackground = default!;
+    private Button riYuButtonHotSong = default!;
+    private Bitmap riYuHotSongNormalBackground = default!;
+    private Bitmap riYuHotSongActiveBackground = default!;
+    private Button hanYuButtonHotSong = default!;
+    private Bitmap hanYuHotSongNormalBackground = default!;
+    private Bitmap hanYuHotSongActiveBackground = default!;
 
 
     private void SetHotSongButtonsVisibility(bool isVisible)
