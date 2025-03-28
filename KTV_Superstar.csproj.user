@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Compile Update="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ImagePanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="OverlayForm\OverlayForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="OverlayForm\OverlayForm.Helpers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="OverlayForm\OverlayForm.Labels.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\CategorySearch\PrimaryForm.CategorySearch.ChinaSongs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\CategorySearch\PrimaryForm.CategorySearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\CategorySearch\PrimaryForm.CategorySearch.LoveDuet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\GroupSearch\PrimaryForm.GroupSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\GroupSearch\PrimaryForm.GroupSearch.GuoYu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\GroupSearch\PrimaryForm.GroupSearch.HanYu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\GroupSearch\PrimaryForm.GroupSearch.RiYu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\GroupSearch\PrimaryForm.GroupSearch.TaiYu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\HotSong\PrimaryForm.HotSong.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\LanguageSearch\PrimaryForm.LanguageSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\LanguageSearch\PrimaryForm.LanguageSearch.GuoYu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\LanguageSearch\PrimaryForm.LanguageSearch.HanYu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\LanguageSearch\PrimaryForm.LanguageSearch.KeYu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\LanguageSearch\PrimaryForm.LanguageSearch.RiYu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\LanguageSearch\PrimaryForm.LanguageSearch.TaiYu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\LanguageSearch\PrimaryForm.LanguageSearch.YingWen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\LanguageSearch\PrimaryForm.LanguageSearch.YueYu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\NewSongAlert\PrimaryForm.NewSongAlert.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\PrimaryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\PrimaryForm.Favorite.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\PrimaryForm.OrderedSongs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\PrimaryForm.Promotions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\PrimaryForm.PromotionsAndMenuPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\PrimaryForm.QRCode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\PrimaryForm.SoundEffects.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\PrimaryForm.SyncScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\PrimaryForm.ToggleLight.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\PrimaryForm.VodScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\SingerSearch\PrimaryForm.SingerSearch.BopomofoSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\SingerSearch\PrimaryForm.SingerSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\SingerSearch\PrimaryForm.SingerSearch.EnglishSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\SingerSearch\PrimaryForm.SingerSearch.HandwritingSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\SingerSearch\PrimaryForm.SingerSearch.PinyinSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\SingerSearch\PrimaryForm.SingerSearch.WordCountSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\SongSearch\PrimaryForm.SongSearch.BopomofoSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\SongSearch\PrimaryForm.SongSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\SongSearch\PrimaryForm.SongSearch.EnglishSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\SongSearch\PrimaryForm.SongSearch.HandwritingSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\SongSearch\PrimaryForm.SongSearch.NumberSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\SongSearch\PrimaryForm.SongSearch.PinyinSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PrimaryFormParts\SongSearch\PrimaryForm.SongSearch.WordCountSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PromotionsAndMenuPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="VideoPlayerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+</Project>
