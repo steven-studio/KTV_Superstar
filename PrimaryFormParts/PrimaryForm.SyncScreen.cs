@@ -125,7 +125,7 @@ public partial class PrimaryForm : Form
 
     private void SyncPauseButton_Click(object sender, EventArgs e)
     {
-        videoPlayerForm.Pause();
+        videoPlayerForm.mediaRenderer.Pause();
 
         // 切换按钮的可见性
         syncPauseButton.Visible = false;
@@ -137,7 +137,7 @@ public partial class PrimaryForm : Form
     
     private void SyncPlayButton_Click(object sender, EventArgs e)
     {
-        videoPlayerForm.Play();
+        videoPlayerForm.mediaRenderer.Play();
 
         // 切换按钮的可见性
         syncPauseButton.Visible = true;

@@ -261,7 +261,7 @@ static class Program
         }
     }
 
-    static void WriteLog(string message)
+    public static void WriteLog(string message)
     {
         // 指定日志文件的路径
         string logFilePath = "mainlog.txt"; // 请根据需要修改文件路径

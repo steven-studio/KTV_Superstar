@@ -203,11 +203,11 @@ public partial class OverlayForm {
         };
 
         secondLineDisplayTimer.Interval = 32000;
-        secondLineDisplayTimer.Tick += SecondLineDisplayTimer_Tick;
+        secondLineDisplayTimer.Tick += SecondLineDisplayTimer_Tick!;
 
         // Initialize Timer for hiding QR code
         qrCodeTimer.Interval = 10000; // 10 seconds
-        qrCodeTimer.Tick += QrCodeTimer_Tick;
+        qrCodeTimer.Tick += QrCodeTimer_Tick!;
     }
 
     private void QrCodeTimer_Tick(object sender, EventArgs e) {

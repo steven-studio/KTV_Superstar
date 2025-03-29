@@ -27,7 +27,7 @@ public partial class PrimaryForm : Form
     #endregion 
 
     
-    public static PrimaryForm Instance { get; private set; } = default!;
+    public static PrimaryForm? Instance { get; private set; }
     public bool isOnOrderedSongsPage = false;
 
     
@@ -1731,258 +1731,264 @@ public int currentPageIndex
             this.Invalidate();
         }
 
-private void RefreshDisplayBase()
-{
-    if (this.InvokeRequired)
-    {
-        this.Invoke(new Action(() => RefreshDisplayBase()));
-        return;
-    }
-
-    this.SuspendLayout();
-    this.Controls.Clear();
-    
-    int startIndex = currentPageIndex * itemsPerPage;
-    int endIndex = Math.Min(startIndex + itemsPerPage, currentSongList.Count);
-    
-    for (int i = startIndex; i < endIndex; i++)
-    {
-        CreateSongLabel(currentSongList[i], i - startIndex, startIndex); // 修改處
-    }
-    
-    this.ResumeLayout();
-}
-
-        private void CreateSongLabel(SongData song, int index, int pageOffset)
-{
-Label songLabel = new Label();
-string statusText = "";
-
-bool isCurrentlyPlaying = false;
-bool hasBeenPlayed = false;
-bool isLatestInstance = true;
-
-// 只在已点歌曲页面显示状态
-if (PrimaryForm.Instance.isOnOrderedSongsPage)
-{
-    // 判断是否正在播放公播歌单
-    bool isPlayingPublicList = userRequestedSongs.Count == 0 || 
-        (currentSongIndexInHistory >= userRequestedSongs.Count - 1 && PrimaryForm.Instance.videoPlayerForm.IsPlayingPublicSong);
-
-    if (isPlayingPublicList)
-    {
-        // 如果在播放公播歌单,说明所有已点歌曲都已播放完成
-        hasBeenPlayed = true;
-        songLabel.ForeColor = Color.Gray;
-        statusText = IsSimplified ? "(播毕)" : "(播畢)";
-    }
-    else 
-    {
-        // 计算已完成播放的歌曲数量
-        int completedCount = 0;
-        // 遍历播放历史，计算实际的已完成数量
-        for (int i = 0; i <= currentSongIndexInHistory && i < playedSongsHistory.Count; i++) {
-            if (i == currentSongIndexInHistory) {
-                completedCount = i + 1; // 当前播放的歌曲
-                break;
+        private void RefreshDisplayBase()
+        {
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new Action(() => RefreshDisplayBase()));
+                return;
             }
-            // 检查播放状态
-            if (i < playStates.Count) {
-                if (playStates[i] == PlayState.Played || playStates[i] == PlayState.Playing) {
-                    completedCount++;
+
+            this.SuspendLayout();
+            this.Controls.Clear();
+            
+            int startIndex = currentPageIndex * itemsPerPage;
+            int endIndex = Math.Min(startIndex + itemsPerPage, currentSongList.Count);
+            
+            for (int i = startIndex; i < endIndex; i++)
+            {
+                CreateSongLabel(currentSongList[i], i - startIndex, startIndex); // 修改處
+            }
+            
+            this.ResumeLayout();
+        }
+
+                private void CreateSongLabel(SongData song, int index, int pageOffset)
+        {
+        Label songLabel = new Label();
+        string statusText = "";
+
+        bool isCurrentlyPlaying = false;
+        bool hasBeenPlayed = false;
+        bool isLatestInstance = true;
+
+        // 只在已点歌曲页面显示状态
+        if (Instance != null && Instance.isOnOrderedSongsPage)
+        {
+            // 判断是否正在播放公播歌单
+            bool isPlayingPublicList = userRequestedSongs.Count == 0 || 
+                (currentSongIndexInHistory >= userRequestedSongs.Count - 1 && PrimaryForm.Instance.videoPlayerForm.IsPlayingPublicSong);
+
+            if (isPlayingPublicList)
+            {
+                // 如果在播放公播歌单,说明所有已点歌曲都已播放完成
+                hasBeenPlayed = true;
+                songLabel.ForeColor = Color.Gray;
+                statusText = IsSimplified ? "(播毕)" : "(播畢)";
+            }
+            else 
+            {
+                // 计算已完成播放的歌曲数量
+                int completedCount = 0;
+                // 遍历播放历史，计算实际的已完成数量
+                for (int i = 0; i <= currentSongIndexInHistory && i < playedSongsHistory.Count; i++) {
+                    if (i == currentSongIndexInHistory) {
+                        completedCount = i + 1; // 当前播放的歌曲
+                        break;
+                    }
+                    // 检查播放状态
+                    if (i < playStates.Count) {
+                        if (playStates[i] == PlayState.Played || playStates[i] == PlayState.Playing) {
+                            completedCount++;
+                        }
+                        // 如果是切歌状态，不增加计数
+                    }
                 }
-                // 如果是切歌状态，不增加计数
-            }
-        }
-        
-        // 获取当前歌曲在全局列表中的位置
-        int songPosition = pageOffset + index;
+                
+                // 获取当前歌曲在全局列表中的位置
+                int songPosition = pageOffset + index;
 
-        // 判断状态
-        if (songPosition < completedCount - 1)
-        {
-            // 已播放完成
-            hasBeenPlayed = true;
-            songLabel.ForeColor = Color.Gray;
-            statusText = IsSimplified ? "(播毕)" : "(播畢)";
-        }
-        else if (songPosition == completedCount - 1)
-        {
-            // 当前正在播放
-            isCurrentlyPlaying = true;
-            songLabel.ForeColor = Color.LimeGreen;
-            statusText = IsSimplified ? "(播放中)" : "(播放中)";
+                // 判断状态
+                if (songPosition < completedCount - 1)
+                {
+                    // 已播放完成
+                    hasBeenPlayed = true;
+                    songLabel.ForeColor = Color.Gray;
+                    statusText = IsSimplified ? "(播毕)" : "(播畢)";
+                }
+                else if (songPosition == completedCount - 1)
+                {
+                    // 当前正在播放
+                    isCurrentlyPlaying = true;
+                    songLabel.ForeColor = Color.LimeGreen;
+                    statusText = IsSimplified ? "(播放中)" : "(播放中)";
+                }
+                else
+                {
+                    // 等待播放
+                    songLabel.ForeColor = Color.White;
+                    statusText = string.Empty;
+                }
+            }
         }
         else
         {
-            // 等待播放
+            // 非已点歌曲页面,使用默认白色
             songLabel.ForeColor = Color.White;
             statusText = string.Empty;
         }
-    }
-}
-else
-{
-    // 非已点歌曲页面,使用默认白色
-    songLabel.ForeColor = Color.White;
-    statusText = string.Empty;
-}
 
-// 根據簡繁體設置選擇要顯示的文字
-string songText = IsSimplified ? 
-    (!string.IsNullOrEmpty(song.SongSimplified) ? song.SongSimplified : song.Song) : 
-    song.Song;
+        // 根據簡繁體設置選擇要顯示的文字
+        string songText = IsSimplified ? 
+            (!string.IsNullOrEmpty(song.SongSimplified) ? song.SongSimplified : song.Song) : 
+            song.Song;
 
-string artistText = IsSimplified ? 
-    (!string.IsNullOrEmpty(song.ArtistASimplified) ? song.ArtistASimplified : song.ArtistA) : 
-    song.ArtistA;
+        string artistText = IsSimplified ? 
+            (!string.IsNullOrEmpty(song.ArtistASimplified) ? song.ArtistASimplified : song.ArtistA) : 
+            song.ArtistA;
 
 
-string fullText = songText + statusText;
-int textLength = fullText.Length;
+        string fullText = songText + statusText;
+        int textLength = fullText.Length;
 
-// 先计算状态文字宽度
-Font normalFont = new Font("微軟正黑體", 26, FontStyle.Bold);
-Font mediumFont = new Font("微軟正黑體", 20, FontStyle.Bold);
-Font smallFont = new Font("微軟正黑體", 16, FontStyle.Bold);
+        // 先计算状态文字宽度
+        Font normalFont = new Font("微軟正黑體", 26, FontStyle.Bold);
+        Font mediumFont = new Font("微軟正黑體", 20, FontStyle.Bold);
+        Font smallFont = new Font("微軟正黑體", 16, FontStyle.Bold);
 
-// 调整阈值并考虑状态文字的长度
-if (textLength > 18)
-{
-    songLabel.Font = smallFont;
-}
-else if (textLength > 13)
-{
-    songLabel.Font = mediumFont;
-}
-else
-{
-    songLabel.Font = normalFont;
-}
-
-songLabel.Text = fullText;
-songLabel.Tag = song;
-songLabel.AutoSize = false;
-
-// 创建歌手标签
-Label artistLabel = new Label();
-artistLabel.Text = artistText;
-artistLabel.Tag = song;
-artistLabel.AutoSize = false;
-
-// 计算位置 - 修改为先左边8个,再右边8个的顺序
-bool isLeftColumn = index < 8;  // 前8个在左边
-int row = isLeftColumn ? index : index - 8;  // 如果是右边,需要减去8来计算正确的行号
-float startX = isLeftColumn ? LeftColumnX : RightColumnX;
-int y = row * (ItemHeight + RowGap);
-
-// 设置标签位置和大小
-int songX = (int)(this.Width * startX);
-int songWidth = (int)(this.Width * SongWidth);
-int artistWidth = (int)(this.Width * ArtistWidth);
-int artistX = songX + songWidth + 10;
-
-// 如果有人声,添加人声图标
-if (song.HumanVoice == 1)
-{
-    PictureBox icon = new PictureBox()
-    {
-        Image = Image.FromFile(Path.Combine(Application.StartupPath, @"themes\superstar\其他符號_人聲\其他符號_人聲.png")),
-        SizeMode = PictureBoxSizeMode.Zoom,
-        Size = new Size(32, 32),
-        Location = new Point(songX + 5, y + 8)
-    };
-    this.Controls.Add(icon);
-    icon.BringToFront();
-    
-    // 有图标时歌名需要右移
-    songLabel.Location = new Point(songX + 42, y);
-    songLabel.Size = new Size(songWidth - 47, ItemHeight - 20);
-}
-else
-{
-    // 无图标时歌名位置正常
-    songLabel.Location = new Point(songX, y);
-    songLabel.Size = new Size(songWidth - 10, ItemHeight - 20);
-}
-
-// 调整歌手标签位置
-artistLabel.Location = new Point(artistX, y + 33);
-artistLabel.Size = new Size(artistWidth - 10, ItemHeight - 35);
-
-// 创建分隔线面板
-Panel separatorPanel = new Panel
-{
-    Location = new Point(songX - 5, y + ItemHeight - 2),
-    Size = new Size(songWidth + artistWidth + 20, 2),
-    BackColor = Color.FromArgb(80, 255, 255, 255),
-    Name = "SeparatorPanel_" + index.ToString()
-};
-
-// 设置字体和样式
-artistLabel.Font = new Font("微軟正黑體", 16, FontStyle.Bold);
-artistLabel.ForeColor = Color.FromArgb(30,144,255);
-songLabel.TextAlign = ContentAlignment.MiddleLeft;
-artistLabel.TextAlign = ContentAlignment.MiddleRight;
-
-// 确保背景完全透明
-songLabel.BackColor = Color.Transparent;
-artistLabel.BackColor = Color.Transparent;
-
-// 添加悬停效果
-EventHandler mouseEnter = (sender, e) => {
-    if (!PrimaryForm.Instance.isOnOrderedSongsPage || 
-        (!isCurrentlyPlaying && (!hasBeenPlayed || !isLatestInstance)))
-    {
-        songLabel.ForeColor = Color.Yellow;
-        artistLabel.ForeColor = Color.Yellow;
-        separatorPanel.BackColor = Color.FromArgb(120, 255, 255, 255);
-    }
-};
-
-EventHandler mouseLeave = (sender, e) => {
-    if (PrimaryForm.Instance.isOnOrderedSongsPage)
-    {
-        if (isCurrentlyPlaying)
+        // 调整阈值并考虑状态文字的长度
+        if (textLength > 18)
         {
-            songLabel.ForeColor = Color.LimeGreen;
+            songLabel.Font = smallFont;
         }
-        else if (hasBeenPlayed && isLatestInstance)
+        else if (textLength > 13)
         {
-            songLabel.ForeColor = Color.Gray;
+            songLabel.Font = mediumFont;
         }
-        else 
+        else
         {
-            songLabel.ForeColor = Color.White;
+            songLabel.Font = normalFont;
         }
-    }
-    else
-    {
-        songLabel.ForeColor = Color.White;
-    }
-    artistLabel.ForeColor = Color.FromArgb(30,144,255);
-    separatorPanel.BackColor = Color.FromArgb(80, 255, 255, 255);
-};
 
-// 添加事件处理
-songLabel.Click += PrimaryForm.Instance.Label_Click!;
-artistLabel.Click += PrimaryForm.Instance.Label_Click!;
-songLabel.MouseEnter += mouseEnter;
-songLabel.MouseLeave += mouseLeave;
-artistLabel.MouseEnter += mouseEnter;
-artistLabel.MouseLeave += mouseLeave;
-separatorPanel.MouseEnter += mouseEnter;
-separatorPanel.MouseLeave += mouseLeave;
+        songLabel.Text = fullText;
+        songLabel.Tag = song;
+        songLabel.AutoSize = false;
 
-// 按正确顺序添加控件
-this.Controls.Add(separatorPanel);
-this.Controls.Add(songLabel);
-this.Controls.Add(artistLabel);
+        // 创建歌手标签
+        Label artistLabel = new Label();
+        artistLabel.Text = artistText;
+        artistLabel.Tag = song;
+        artistLabel.AutoSize = false;
 
-// 确保控件层次正确
-songLabel.BringToFront();
-artistLabel.BringToFront();
-}
+        // 计算位置 - 修改为先左边8个,再右边8个的顺序
+        bool isLeftColumn = index < 8;  // 前8个在左边
+        int row = isLeftColumn ? index : index - 8;  // 如果是右边,需要减去8来计算正确的行号
+        float startX = isLeftColumn ? LeftColumnX : RightColumnX;
+        int y = row * (ItemHeight + RowGap);
+
+        // 设置标签位置和大小
+        int songX = (int)(this.Width * startX);
+        int songWidth = (int)(this.Width * SongWidth);
+        int artistWidth = (int)(this.Width * ArtistWidth);
+        int artistX = songX + songWidth + 10;
+
+        // 如果有人声,添加人声图标
+        if (song.HumanVoice == 1)
+        {
+            PictureBox icon = new PictureBox()
+            {
+                Image = Image.FromFile(Path.Combine(Application.StartupPath, @"themes\superstar\其他符號_人聲\其他符號_人聲.png")),
+                SizeMode = PictureBoxSizeMode.Zoom,
+                Size = new Size(32, 32),
+                Location = new Point(songX + 5, y + 8)
+            };
+            this.Controls.Add(icon);
+            icon.BringToFront();
+            
+            // 有图标时歌名需要右移
+            songLabel.Location = new Point(songX + 42, y);
+            songLabel.Size = new Size(songWidth - 47, ItemHeight - 20);
+        }
+        else
+        {
+            // 无图标时歌名位置正常
+            songLabel.Location = new Point(songX, y);
+            songLabel.Size = new Size(songWidth - 10, ItemHeight - 20);
+        }
+
+        // 调整歌手标签位置
+        artistLabel.Location = new Point(artistX, y + 33);
+        artistLabel.Size = new Size(artistWidth - 10, ItemHeight - 35);
+
+        // 创建分隔线面板
+        Panel separatorPanel = new Panel
+        {
+            Location = new Point(songX - 5, y + ItemHeight - 2),
+            Size = new Size(songWidth + artistWidth + 20, 2),
+            BackColor = Color.FromArgb(80, 255, 255, 255),
+            Name = "SeparatorPanel_" + index.ToString()
+        };
+
+        // 设置字体和样式
+        artistLabel.Font = new Font("微軟正黑體", 16, FontStyle.Bold);
+        artistLabel.ForeColor = Color.FromArgb(30,144,255);
+        songLabel.TextAlign = ContentAlignment.MiddleLeft;
+        artistLabel.TextAlign = ContentAlignment.MiddleRight;
+
+        // 确保背景完全透明
+        songLabel.BackColor = Color.Transparent;
+        artistLabel.BackColor = Color.Transparent;
+
+        // 添加悬停效果
+        EventHandler mouseEnter = (sender, e) => {
+            if (Instance != null && !Instance.isOnOrderedSongsPage || 
+                (!isCurrentlyPlaying && (!hasBeenPlayed || !isLatestInstance)))
+            {
+                songLabel.ForeColor = Color.Yellow;
+                artistLabel.ForeColor = Color.Yellow;
+                separatorPanel.BackColor = Color.FromArgb(120, 255, 255, 255);
+            }
+        };
+
+        EventHandler mouseLeave = (sender, e) => {
+            if (Instance != null && Instance.isOnOrderedSongsPage)
+            {
+                if (isCurrentlyPlaying)
+                {
+                    songLabel.ForeColor = Color.LimeGreen;
+                }
+                else if (hasBeenPlayed && isLatestInstance)
+                {
+                    songLabel.ForeColor = Color.Gray;
+                }
+                else 
+                {
+                    songLabel.ForeColor = Color.White;
+                }
+            }
+            else
+            {
+                songLabel.ForeColor = Color.White;
+            }
+            artistLabel.ForeColor = Color.FromArgb(30,144,255);
+            separatorPanel.BackColor = Color.FromArgb(80, 255, 255, 255);
+        };
+
+        // 添加事件处理
+        if (Instance != null)
+        {
+            songLabel.Click += Instance.Label_Click!;
+        }
+        if (Instance != null)
+        {
+            artistLabel.Click += Instance.Label_Click!;
+        }
+        songLabel.MouseEnter += mouseEnter;
+        songLabel.MouseLeave += mouseLeave;
+        artistLabel.MouseEnter += mouseEnter;
+        artistLabel.MouseLeave += mouseLeave;
+        separatorPanel.MouseEnter += mouseEnter;
+        separatorPanel.MouseLeave += mouseLeave;
+
+        // 按正确顺序添加控件
+        this.Controls.Add(separatorPanel);
+        this.Controls.Add(songLabel);
+        this.Controls.Add(artistLabel);
+
+        // 确保控件层次正确
+        songLabel.BringToFront();
+        artistLabel.BringToFront();
+        }
         private bool IsLatestInstanceBeforeIndex(SongData song, int currentIndex)
         {
             if (currentSongList == null) return true;
@@ -2736,7 +2742,7 @@ artistLabel.BringToFront();
     
     public void OriginalSongButton_Click(object sender, EventArgs e)
     {
-        videoPlayerForm.ToggleVocalRemoval();
+        videoPlayerForm.mediaRenderer.ToggleVocalRemoval();
     }
 
     private void ReplayButton_Click(object sender, EventArgs e)
@@ -2746,8 +2752,7 @@ artistLabel.BringToFront();
 
     private void PauseButton_Click(object sender, EventArgs e)
     {
-        videoPlayerForm.Pause();
-
+        videoPlayerForm.mediaRenderer.Pause();
         
         pauseButton.Visible = false;
         playButton.Visible = true;
@@ -2755,8 +2760,7 @@ artistLabel.BringToFront();
 
     private void PlayButton_Click(object sender, EventArgs e)
     {
-        videoPlayerForm.Play();
-
+        videoPlayerForm.mediaRenderer.Play();
         
         playButton.Visible = false;
         pauseButton.Visible = true;
@@ -2810,7 +2814,7 @@ artistLabel.BringToFront();
         if (videoPlayerForm.isMuted)
         {
             
-            videoPlayerForm.SetVolume(videoPlayerForm.previousVolume);
+            videoPlayerForm.mediaRenderer.SetVolume(videoPlayerForm.previousVolume);
             
             videoPlayerForm.isMuted = false;
             OverlayForm.MainForm.HideMuteLabel();
@@ -2818,8 +2822,8 @@ artistLabel.BringToFront();
         else
         {
             
-            videoPlayerForm.previousVolume = videoPlayerForm.GetVolume();
-            videoPlayerForm.SetVolume(-10000);
+            videoPlayerForm.previousVolume = videoPlayerForm.mediaRenderer.GetVolume();
+            videoPlayerForm.mediaRenderer.SetVolume(-10000);
             
             videoPlayerForm.isMuted = true;
             OverlayForm.MainForm.ShowMuteLabel();

@@ -1,5 +1,5 @@
 public class SearchRequest
 {
-    public string Query { get; set; }
-    public string Type { get; set; }
+    public required string Query { get; set; }
+    public required string Type { get; set; }
 }

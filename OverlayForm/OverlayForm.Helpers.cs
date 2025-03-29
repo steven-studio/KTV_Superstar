@@ -122,6 +122,9 @@ public partial class OverlayForm {
     }
 
     private void MarqueeTimer_Tick(object sender, EventArgs e) {
+        if (this.IsDisposed || !this.IsHandleCreated)
+            return;
+        
         marqueeXPos -= 2; // 調整移動速度
 
         // 使用與顯示相同的字體來計算文本寬度

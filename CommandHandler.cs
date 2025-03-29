@@ -28,10 +28,10 @@ public class CommandHandler {
 
         switch (indata) {
         case "A261A4":
-            HandleInputA();
+            await HandleInputA();
             break;
         case "A262A4":
-            HandleInputB();
+            await HandleInputB();
             break;
         case "A263A4":
             ClearDisplay();
@@ -53,7 +53,7 @@ public class CommandHandler {
             HandleHotSongAnnouncements();
             break;
         case "A267A4":
-            SkipToNextSong();
+            await SkipToNextSong();
             ClearDisplay();
             break;
         case "A269A4":
@@ -62,12 +62,12 @@ public class CommandHandler {
             // 原唱
         case "A26CA4":
             Console.WriteLine("ToggleVocalRemoval Invoked");
-            InvokeAction(() => VideoPlayerForm.Instance.ToggleVocalRemoval());
+            InvokeAction(() => VideoPlayerForm.Instance.mediaRenderer.ToggleVocalRemoval());
             InvokeAction(() => OverlayForm.MainForm.ShowOriginalSongLabel());
             break;
             // 導唱
         case "A26EA4":
-            InvokeAction(() => VideoPlayerForm.Instance.ToggleVocalRemoval());
+            InvokeAction(() => VideoPlayerForm.Instance.mediaRenderer.ToggleVocalRemoval());
             break;
         case "A26DA4":
             PauseOrResumeSong();
@@ -174,7 +174,7 @@ public class CommandHandler {
             break;
         default:
             if (Regex.IsMatch(indata, @"^A23\d+A4$")) {
-                HandleNumberInput(indata);
+                await HandleNumberInput(indata);
             }
             break;
         }
@@ -188,11 +188,11 @@ public class CommandHandler {
         }
     }
 
-    private static void SkipToNextSong() {
+    private static async Task SkipToNextSong() {
         if (PrimaryForm.Instance.InvokeRequired) {
-            PrimaryForm.Instance.Invoke(new System.Action(() => PrimaryForm.Instance.videoPlayerForm.SkipToNextSong()));
+            PrimaryForm.Instance.Invoke(new System.Action(async () => await PrimaryForm.Instance.videoPlayerForm.SkipToNextSong()));
         } else {
-            PrimaryForm.Instance.videoPlayerForm.SkipToNextSong();
+            await PrimaryForm.Instance.videoPlayerForm.SkipToNextSong();
         }
 
         OverlayForm.MainForm.Invoke(new System.Action(() => {
@@ -210,9 +210,9 @@ public class CommandHandler {
 
     private static void PauseOrResumeSong() {
         if (PrimaryForm.Instance.InvokeRequired) {
-            PrimaryForm.Instance.Invoke(new System.Action(() => PrimaryForm.Instance.videoPlayerForm.PauseOrResumeSong()));
+            PrimaryForm.Instance.Invoke(new System.Action(() => PrimaryForm.Instance.videoPlayerForm.mediaRenderer.PauseOrResumeSong()));
         } else {
-            PrimaryForm.Instance.videoPlayerForm.PauseOrResumeSong();
+            PrimaryForm.Instance.videoPlayerForm.mediaRenderer.PauseOrResumeSong();
         }
     }
 
@@ -222,14 +222,14 @@ public class CommandHandler {
         } else {
             if (VideoPlayerForm.Instance.isMuted) {
 
-                VideoPlayerForm.Instance.SetVolume(VideoPlayerForm.Instance.previousVolume);
+                VideoPlayerForm.Instance.mediaRenderer.SetVolume(VideoPlayerForm.Instance.previousVolume);
 
                 VideoPlayerForm.Instance.isMuted = false;
                 OverlayForm.MainForm.Invoke(new System.Action(() => OverlayForm.MainForm.HideMuteLabel()));
             } else {
 
-                VideoPlayerForm.Instance.previousVolume = VideoPlayerForm.Instance.GetVolume();
-                VideoPlayerForm.Instance.SetVolume(-10000);
+                VideoPlayerForm.Instance.previousVolume = VideoPlayerForm.Instance.mediaRenderer.GetVolume();
+                VideoPlayerForm.Instance.mediaRenderer.SetVolume(-10000);
 
                 VideoPlayerForm.Instance.isMuted = true;
                 OverlayForm.MainForm.Invoke(new System.Action(() => OverlayForm.MainForm.ShowMuteLabel()));
@@ -237,7 +237,7 @@ public class CommandHandler {
         }
     }
 
-    private void HandleInputA() {
+    private async Task HandleInputA() {
 
         OverlayForm.displayTimer.Stop();
         string input = "a";
@@ -248,19 +248,19 @@ public class CommandHandler {
         if (readyForSongListInput) {
 
             if (OverlayForm.MainForm.InvokeRequired) {
-                OverlayForm.MainForm.Invoke(new System.Action(() => {
-                    OverlayForm.MainForm.OnUserInput(input);
+                OverlayForm.MainForm.Invoke(new System.Action(async () => {
+                    await OverlayForm.MainForm.OnUserInput(input);
                 }));
             } else {
-                OverlayForm.MainForm.OnUserInput(input);
+                await OverlayForm.MainForm.OnUserInput(input);
             }
         } else {
             if (OverlayForm.MainForm.InvokeRequired) {
-                OverlayForm.MainForm.Invoke(new System.Action(() => {
+                OverlayForm.MainForm.Invoke(new System.Action(async () => {
                     if (song != null) {
                         ClearDisplay();
                         OverlayForm.MainForm.displayLabel.Text = String.Format("已點歌曲:{0}", song);
-                        OverlayForm.MainForm.AddSongToPlaylist(song);
+                        await OverlayForm.MainForm.AddSongToPlaylist(song);
                         OverlayForm.MainForm.nextSongLabel.Visible = false;
                         OverlayForm.displayTimer.Start();
                     } else {
@@ -274,7 +274,7 @@ public class CommandHandler {
                 if (song != null) {
                     ClearDisplay();
                     OverlayForm.MainForm.displayLabel.Text = String.Format("{0}", song);
-                    OverlayForm.MainForm.AddSongToPlaylist(song);
+                    await OverlayForm.MainForm.AddSongToPlaylist(song);
                     OverlayForm.MainForm.nextSongLabel.Visible = false;
                     OverlayForm.displayTimer.Start();
                 } else {
@@ -287,7 +287,7 @@ public class CommandHandler {
         }
     }
 
-    private void HandleInputB() {
+    private async Task HandleInputB() {
 
         OverlayForm.displayTimer.Stop();
         string input = "b";
@@ -298,11 +298,11 @@ public class CommandHandler {
         if (readyForSongListInput) {
 
             if (OverlayForm.MainForm.InvokeRequired) {
-                OverlayForm.MainForm.Invoke(new System.Action(() => {
-                    OverlayForm.MainForm.OnUserInput(input);
+                OverlayForm.MainForm.Invoke(new System.Action(async () => {
+                    await OverlayForm.MainForm.OnUserInput(input);
                 }));
             } else {
-                OverlayForm.MainForm.OnUserInput(input);
+                await OverlayForm.MainForm.OnUserInput(input);
             }
         } else {
             if (OverlayForm.MainForm.InvokeRequired) {
@@ -673,7 +673,7 @@ public class CommandHandler {
         }
     }
 
-    private static void HandleNumberInput(string trimmedData) {
+    private static async Task HandleNumberInput(string trimmedData) {
         string number = trimmedData;
 
         var match = Regex.Match(trimmedData, @"^A23(\d)A4$");
@@ -687,11 +687,11 @@ public class CommandHandler {
         if (readyForSongListInput) {
 
             if (OverlayForm.MainForm.InvokeRequired) {
-                OverlayForm.MainForm.Invoke(new System.Action(() => {
-                    OverlayForm.MainForm.OnUserInput(number);
+                OverlayForm.MainForm.Invoke(new System.Action(async () => {
+                    await OverlayForm.MainForm.OnUserInput(number);
                 }));
             } else {
-                OverlayForm.MainForm.OnUserInput(number);
+                await OverlayForm.MainForm.OnUserInput(number);
             }
 
         } else {
@@ -726,7 +726,11 @@ public class CommandHandler {
                     UseShellExecute = false,
                     RedirectStandardOutput = true
             };
-            Process process = Process.Start(processStartInfo);
+            Process? process = Process.Start(processStartInfo);
+            if (process == null)
+            {
+                throw new InvalidOperationException("Process.Start returned null.");
+            }
             process.WaitForExit();
             Console.WriteLine("Computer is shutting down...");
         } catch (Exception ex) {

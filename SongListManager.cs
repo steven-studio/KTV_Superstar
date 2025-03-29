@@ -11,10 +11,10 @@ namespace KTV_Superstar;
 
 public class SongListManager
 {
-    private static SongListManager _instance;
+    private static SongListManager? _instance;
     public List<SongData> AllSongs { get; private set; }
-    public static Dictionary<string, List<SongData>> NewSongLists { get; private set; }
-    public static Dictionary<string, List<SongData>> HotSongLists { get; private set; }
+    public static Dictionary<string, List<SongData>>? NewSongLists { get; private set; }
+    public static Dictionary<string, List<SongData>>? HotSongLists { get; private set; }
     public List<SongData> FavoriteSongs { get; private set; }  
     public const int SongsPerPage = 9;
 
@@ -25,6 +25,7 @@ public class SongListManager
     {
         AllSongs = new List<SongData>();
         NewSongLists = new Dictionary<string, List<SongData>>();
+        HotSongLists = new Dictionary<string, List<SongData>>();
         HotSongLists = new Dictionary<string, List<SongData>>();
         FavoriteSongs = new List<SongData>();
 
@@ -249,15 +250,15 @@ public class SongListManager
                     {
                         while (reader.Read())  
                         {
-                            string songNumber = reader["歌曲編號"].ToString();
-                            string category = reader["語別"].ToString();
-                            string song = reader["歌曲名稱"].ToString();
+                            string songNumber = reader["歌曲編號"]?.ToString() ?? string.Empty;
+                            string category = reader["語別"].ToString() ?? string.Empty;
+                            string song = reader["歌曲名稱"].ToString() ?? string.Empty;
                             int plays = Convert.ToInt32(reader["點播次數"]);
-                            string artistA = reader["歌星 A"].ToString();
-                            string artistB = reader["歌星 B"].ToString();
-                            string artistACategory = reader["歌星A分類"].ToString(); 
-                            string artistBCategory = reader["歌星B分類"].ToString(); 
-                            string dateValue = reader["新增日期"].ToString();
+                            string artistA = reader["歌星 A"].ToString() ?? string.Empty;
+                            string artistB = reader["歌星 B"].ToString() ?? string.Empty;
+                            string artistACategory = reader["歌星A分類"].ToString() ?? string.Empty; 
+                            string artistBCategory = reader["歌星B分類"].ToString() ?? string.Empty; 
+                            string dateValue = reader["新增日期"].ToString() ?? string.Empty;
                             DateTime addedTime;
 
                             if (string.IsNullOrWhiteSpace(dateValue))
@@ -271,27 +272,27 @@ public class SongListManager
                                 {
                                     addedTime = DateTime.ParseExact(dateValue, "yyyy-MM-dd", CultureInfo.InvariantCulture);
                                 }
-                                catch (System.FormatException ex)
+                                catch (System.FormatException)
                                 {
                                     // Console.WriteLine(String.Format("Invalid date format for song: {0}. Error: {1}", song, ex.Message));
                                     addedTime = DateTime.Now; 
                                 }
                             }
-                            string basePathHost1 = reader["路徑 1"].ToString();
-                            string basePathHost2 = reader["路徑 2"].ToString();
-                            string fileName = reader["歌曲檔名"].ToString();
+                            string basePathHost1 = reader["路徑 1"].ToString() ?? string.Empty;
+                            string basePathHost2 = reader["路徑 2"].ToString() ?? string.Empty;
+                            string fileName = reader["歌曲檔名"].ToString() ?? string.Empty;
                             string songFilePathHost1 = Path.Combine(basePathHost1, fileName);
                             string songFilePathHost2 = Path.Combine(basePathHost2, fileName);
-                            string phoneticNotation = reader["歌曲注音"].ToString();
-                            string pinyinNotation = reader["歌曲拼音"].ToString();
-                            string artistAPhonetic = reader["歌星A注音"].ToString();
-                            string artistBPhonetic = reader["歌星B注音"].ToString();
-                            string artistASimplified = reader["歌星A簡體"].ToString();
-                            string artistBSimplified = reader["歌星B簡體"].ToString();
-                            string songSimplified = reader["歌名簡體"].ToString();
-                            string songGenre = reader["分類"].ToString();  
-                            string artistAPinyin = reader["歌星A拼音"].ToString();
-                            string artistBPinyin = reader["歌星B拼音"].ToString();
+                            string phoneticNotation = reader["歌曲注音"].ToString() ?? string.Empty;
+                            string pinyinNotation = reader["歌曲拼音"].ToString() ?? string.Empty;
+                            string artistAPhonetic = reader["歌星A注音"].ToString() ?? string.Empty;
+                            string artistBPhonetic = reader["歌星B注音"].ToString() ?? string.Empty;
+                            string artistASimplified = reader["歌星A簡體"].ToString() ?? string.Empty;
+                            string artistBSimplified = reader["歌星B簡體"].ToString() ?? string.Empty;
+                            string songSimplified = reader["歌名簡體"].ToString() ?? string.Empty;
+                            string songGenre = reader["分類"].ToString() ?? string.Empty;  
+                            string artistAPinyin = reader["歌星A拼音"].ToString() ?? string.Empty;
+                            string artistBPinyin = reader["歌星B拼音"].ToString() ?? string.Empty;
                             int humanVoice = Convert.ToInt32(reader["人聲"]);  
 
                             AllSongs.Add(new SongData(songNumber, category, song, plays, artistA, artistB, artistACategory, artistBCategory, addedTime, songFilePathHost1, songFilePathHost2, phoneticNotation, pinyinNotation, artistAPhonetic, artistBPhonetic, artistASimplified, artistBSimplified, songSimplified, songGenre, artistAPinyin, artistBPinyin, humanVoice));
@@ -351,40 +352,40 @@ public class SongListManager
                     {
                         while (reader.Read())  
                         {
-                            string songNumber = reader["歌曲編號"].ToString();
-                            string category = reader["語別"].ToString();
-                            string song = reader["歌曲名稱"].ToString();
+                            string songNumber = reader["歌曲編號"].ToString() ?? string.Empty;
+                            string category = reader["語別"].ToString() ?? string.Empty;
+                            string song = reader["歌曲名稱"].ToString() ?? string.Empty;
                             int plays = Convert.ToInt32(reader["點播次數"]);
-                            string artistA = reader["歌星 A"].ToString();
-                            string artistB = reader["歌星 B"].ToString();
-                            string artistACategory = reader["歌星A分類"].ToString();
-                            string artistBCategory = reader["歌星B分類"].ToString(); 
+                            string artistA = reader["歌星 A"].ToString() ?? string.Empty;
+                            string artistB = reader["歌星 B"].ToString() ?? string.Empty;
+                            string artistACategory = reader["歌星A分類"].ToString() ?? string.Empty;
+                            string artistBCategory = reader["歌星B分類"].ToString() ?? string.Empty; 
                             DateTime addedTime;
 
                             try
                             {
-                                addedTime = DateTime.ParseExact(reader["新增日期"].ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                                addedTime = DateTime.ParseExact(reader["新增日期"].ToString() ?? string.Empty, "yyyy-MM-dd", CultureInfo.InvariantCulture);
                             }
                             catch (System.FormatException)
                             {
                                 addedTime = DateTime.Now;
                             }
 
-                            string basePathHost1 = reader["路徑 1"].ToString();
-                            string basePathHost2 = reader["路徑 2"].ToString();
-                            string fileName = reader["歌曲檔名"].ToString();
+                            string basePathHost1 = reader["路徑 1"].ToString() ?? string.Empty;
+                            string basePathHost2 = reader["路徑 2"].ToString() ?? string.Empty;
+                            string fileName = reader["歌曲檔名"].ToString() ?? string.Empty;
                             string songFilePathHost1 = Path.Combine(basePathHost1, fileName);
                             string songFilePathHost2 = Path.Combine(basePathHost2, fileName);
-                            string phoneticNotation = reader["歌曲注音"].ToString();
-                            string pinyinNotation = reader["歌曲拼音"].ToString();
-                            string artistAPhonetic = reader["歌星A注音"].ToString();
-                            string artistBPhonetic = reader["歌星B注音"].ToString();
-                            string artistASimplified = reader["歌星A簡體"].ToString();
-                            string artistBSimplified = reader["歌星B簡體"].ToString();
-                            string songSimplified = reader["歌名簡體"].ToString();
-                            string songGenre = reader["分類"].ToString(); 
-                            string artistAPinyin = reader["歌星A拼音"].ToString();
-                            string artistBPinyin = reader["歌星B拼音"].ToString();
+                            string phoneticNotation = reader["歌曲注音"].ToString() ?? string.Empty;
+                            string pinyinNotation = reader["歌曲拼音"].ToString() ?? string.Empty;
+                            string artistAPhonetic = reader["歌星A注音"].ToString() ?? string.Empty;
+                            string artistBPhonetic = reader["歌星B注音"].ToString() ?? string.Empty;
+                            string artistASimplified = reader["歌星A簡體"].ToString() ?? string.Empty;
+                            string artistBSimplified = reader["歌星B簡體"].ToString() ?? string.Empty;
+                            string songSimplified = reader["歌名簡體"].ToString() ?? string.Empty;
+                            string songGenre = reader["分類"].ToString() ?? string.Empty; 
+                            string artistAPinyin = reader["歌星A拼音"].ToString() ?? string.Empty;
+                            string artistBPinyin = reader["歌星B拼音"].ToString() ?? string.Empty;
                             int humanVoice = Convert.ToInt32(reader["人聲"]);  
 
                             FavoriteSongs.Add(new SongData(
@@ -395,8 +396,11 @@ public class SongListManager
                                 artistBSimplified, songSimplified, songGenre, 
                                 artistAPinyin, artistBPinyin, humanVoice));
                         }
-                        PrimaryForm.Instance.multiPagePanel.currentPageIndex = 0;
-                        PrimaryForm.Instance.multiPagePanel.LoadSongs(FavoriteSongs);
+                        if (PrimaryForm.Instance?.multiPagePanel != null)
+                        {
+                            PrimaryForm.Instance.multiPagePanel.currentPageIndex = 0;
+                            PrimaryForm.Instance.multiPagePanel.LoadSongs(FavoriteSongs);
+                        }
                     }
                 }
 
@@ -484,7 +488,7 @@ public class SongListManager
         return AllSongs.Where(song => song.Song.ToLower().Contains(keywordLower)).ToList();
     }
     
-    public SongData SearchSongByNumber(string songNumber)
+    public SongData? SearchSongByNumber(string songNumber)
     {
         foreach (var song in AllSongs)
         {
@@ -504,14 +508,12 @@ public class SongListManager
         
         foreach (var category in categories)
         {
-            
             var songsInCategory = AllSongs
                 .Where(s => s.Category == category)
                 .OrderByDescending(s => s.AddedTime)
                 .Take(songLimit)  
                 .ToList();
-            
-            NewSongLists.Add(category, songsInCategory);
+            NewSongLists?.Add(category, songsInCategory);
         }
     }
 
@@ -523,22 +525,19 @@ public class SongListManager
         
         foreach (var category in categories)
         {
-            
             var songsInCategory = AllSongs
                 .Where(s => s.Category == category)
                 .OrderByDescending(s => s.Plays)
                 .Take(songLimit)  
                 .ToList();
-
             
-            HotSongLists.Add(category, songsInCategory);
+            HotSongLists?.Add(category, songsInCategory);
         }
     }
 
     public List<SongData> GetNewSongsByCategory(string category)
     {
-        
-        if (NewSongLists.ContainsKey(category))
+        if (NewSongLists != null && NewSongLists.ContainsKey(category))
             return NewSongLists[category];
         else
             return new List<SongData>();  
@@ -546,8 +545,7 @@ public class SongListManager
 
     public List<SongData> GetHotSongsByCategory(string category)
     {
-        
-        if (HotSongLists.ContainsKey(category))
+        if (HotSongLists != null && HotSongLists.ContainsKey(category))
             return HotSongLists[category];
         else
             return new List<SongData>();  
@@ -595,40 +593,48 @@ public class SongListManager
                     {
                         while (reader.Read())  
                         {
-                            string songNumber = reader["歌曲編號"].ToString();
-                            string category = reader["語別"].ToString();
-                            string song = reader["歌曲名稱"].ToString();
+                            string songNumber = reader["歌曲編號"].ToString() ?? string.Empty;
+                            string category = reader["語別"].ToString() ?? string.Empty;
+                            string song = reader["歌曲名稱"].ToString() ?? string.Empty;
                             int plays = Convert.ToInt32(reader["點播次數"]);
-                            string artistA = reader["歌星 A"].ToString();
-                            string artistB = reader["歌星 B"].ToString();
-                            string artistACategory = reader["歌星A分類"].ToString();
-                            string artistBCategory = reader["歌星B分類"].ToString();
+                            string artistA = reader["歌星 A"].ToString() ?? string.Empty;
+                            string artistB = reader["歌星 B"].ToString() ?? string.Empty;
+                            string artistACategory = reader["歌星A分類"].ToString() ?? string.Empty;
+                            string artistBCategory = reader["歌星B分類"].ToString() ?? string.Empty;
                             DateTime addedTime;
 
                             try
                             {
-                                addedTime = DateTime.ParseExact(reader["新增日期"].ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                                var dateValue = reader["新增日期"]?.ToString();
+                                if (!string.IsNullOrWhiteSpace(dateValue))
+                                {
+                                    addedTime = DateTime.ParseExact(dateValue, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                                }
+                                else
+                                {
+                                    addedTime = DateTime.Now;
+                                }
                             }
                             catch (System.FormatException)
                             {
                                 addedTime = DateTime.Now;
                             }
 
-                            string basePathHost1 = reader["路徑 1"].ToString();
-                            string basePathHost2 = reader["路徑 2"].ToString();
-                            string fileName = reader["歌曲檔名"].ToString();
+                            string basePathHost1 = reader["路徑 1"].ToString() ?? string.Empty;
+                            string basePathHost2 = reader["路徑 2"].ToString() ?? string.Empty;
+                            string fileName = reader["歌曲檔名"].ToString() ?? string.Empty;
                             string songFilePathHost1 = Path.Combine(basePathHost1, fileName);
                             string songFilePathHost2 = Path.Combine(basePathHost2, fileName);
-                            string phoneticNotation = reader["歌曲注音"].ToString();
-                            string pinyinNotation = reader["歌曲拼音"].ToString();
-                            string artistAPhonetic = reader["歌星A注音"].ToString();
-                            string artistBPhonetic = reader["歌星B注音"].ToString();
-                            string artistASimplified = reader["歌星A簡體"].ToString();
-                            string artistBSimplified = reader["歌星B簡體"].ToString();
-                            string songSimplified = reader["歌名簡體"].ToString();
-                            string songGenre = reader["分類"].ToString(); 
-                            string artistAPinyin = reader["歌星A拼音"].ToString();
-                            string artistBPinyin = reader["歌星B拼音"].ToString();
+                            string phoneticNotation = reader["歌曲注音"].ToString() ?? string.Empty;
+                            string pinyinNotation = reader["歌曲拼音"].ToString() ?? string.Empty;
+                            string artistAPhonetic = reader["歌星A注音"].ToString() ?? string.Empty;
+                            string artistBPhonetic = reader["歌星B注音"].ToString() ?? string.Empty;
+                            string artistASimplified = reader["歌星A簡體"].ToString() ?? string.Empty;
+                            string artistBSimplified = reader["歌星B簡體"].ToString() ?? string.Empty;
+                            string songSimplified = reader["歌名簡體"].ToString() ?? string.Empty;
+                            string songGenre = reader["分類"].ToString() ?? string.Empty; 
+                            string artistAPinyin = reader["歌星A拼音"].ToString() ?? string.Empty;
+                            string artistBPinyin = reader["歌星B拼音"].ToString() ?? string.Empty;
                             int humanVoice = Convert.ToInt32(reader["人聲"]);
 
                             favoriteSongs.Add(new SongData(

@@ -444,9 +444,9 @@ public class HttpServer
             {
                 case "pause":
                 // 执行暂停操作
-                    if (VideoPlayerForm.Instance.isPaused)
+                    if (VideoPlayerForm.Instance.mediaRenderer.IsPaused)
                     {
-                        PrimaryForm.Instance.videoPlayerForm.Play();
+                        PrimaryForm.Instance.videoPlayerForm.mediaRenderer.Play();
                         PrimaryForm.Instance.pauseButton.Visible = true;
                         PrimaryForm.Instance.playButton.Visible = false;
                         PrimaryForm.Instance.syncPauseButton.Visible = true;
@@ -454,7 +454,7 @@ public class HttpServer
                     }
                     else
                     {
-                        PrimaryForm.Instance.videoPlayerForm.Pause();
+                        PrimaryForm.Instance.videoPlayerForm.mediaRenderer.Pause();
                         PrimaryForm.Instance.pauseButton.Visible = false;
                         PrimaryForm.Instance.playButton.Visible = true;
                         PrimaryForm.Instance.syncPauseButton.Visible = false;
@@ -482,7 +482,7 @@ public class HttpServer
                         if (PrimaryForm.Instance.videoPlayerForm.isMuted)
                         {
                             // 取消静音，恢复之前的音量
-                            PrimaryForm.Instance.videoPlayerForm.SetVolume(PrimaryForm.Instance.videoPlayerForm.previousVolume);
+                            PrimaryForm.Instance.videoPlayerForm.mediaRenderer.SetVolume(PrimaryForm.Instance.videoPlayerForm.previousVolume);
                             // muteButton.Text = "Mute";
                             PrimaryForm.Instance.videoPlayerForm.isMuted = false;
                             OverlayForm.MainForm.HideMuteLabel();
@@ -490,8 +490,8 @@ public class HttpServer
                         else
                         {
                             // 静音，将音量设置为-10000
-                            PrimaryForm.Instance.videoPlayerForm.previousVolume = PrimaryForm.Instance.videoPlayerForm.GetVolume();
-                            PrimaryForm.Instance.videoPlayerForm.SetVolume(-10000);
+                            PrimaryForm.Instance.videoPlayerForm.previousVolume = PrimaryForm.Instance.videoPlayerForm.mediaRenderer.GetVolume();
+                            PrimaryForm.Instance.videoPlayerForm.mediaRenderer.SetVolume(-10000);
                             // muteButton.Text = "Unmute";
                             PrimaryForm.Instance.videoPlayerForm.isMuted = true;
                             OverlayForm.MainForm.ShowMuteLabel();
@@ -517,12 +517,12 @@ public class HttpServer
                     {
                         PrimaryForm.Instance.Invoke(new System.Action(() => 
                         {
-                            PrimaryForm.Instance.videoPlayerForm.ToggleVocalRemoval();
+                            PrimaryForm.Instance.videoPlayerForm.mediaRenderer.ToggleVocalRemoval();
                         }));
                     }
                     else
                     {
-                        PrimaryForm.Instance.videoPlayerForm.ToggleVocalRemoval();
+                        PrimaryForm.Instance.videoPlayerForm.mediaRenderer.ToggleVocalRemoval();
                     }
                     // 执行原唱操作
                     

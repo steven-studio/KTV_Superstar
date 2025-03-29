@@ -1,0 +1,4 @@
+Refactor: remove compiler warnings in KTV_Superstar project
+
+- Resolved minor warnings related to unused variables and type conversions
+- Improved code clarity to ensure better maintainability
