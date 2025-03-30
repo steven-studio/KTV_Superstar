@@ -54,7 +54,6 @@ public class SongData
 
     public override string ToString()
     {
-        
         return !string.IsNullOrWhiteSpace(ArtistB)
             ? String.Format("{0} - {1} - {2}", ArtistA, ArtistB, Song)
             : String.Format("{0} - {1}", ArtistA, Song);
